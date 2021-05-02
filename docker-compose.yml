@@ -1,0 +1,24 @@
+version: '3.2'
+services:
+  substrate-interface-api:
+    build: .
+    image: substrate-interface-api
+    ports:
+      - '8000:8000'
+    volumes:
+      - '.:/usr/src/app'
+    command: ./start.sh
+    environment:
+      - PYTHONPATH=/usr/src/app
+      - ENVIRONMENT=dev
+      - TYPE_REGISTRY=polkadot
+      - SUBSTRATE_ADDRESS_TYPE=0
+      - SUBSTRATE_RPC_URL=https://rpc.polkadot.io
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:3.2.11
+
+volumes:
+  substrate-data:
